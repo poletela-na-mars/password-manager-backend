@@ -19,7 +19,7 @@ app.use(cors());
 
 app.post('/auth/login', handleValidationErrors, UserController.login);
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
-app.get('/auth/checkAuth', checkAuth, UserController.getMe);
+app.get('/auth/checkAuth', checkAuth, UserController.getCheckAuth);
 
 const port = process.env.PORT || 4444;
 app.listen(4444, (err) => {

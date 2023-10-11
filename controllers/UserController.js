@@ -46,7 +46,7 @@ export const register = async (req, res) => {
 		}
 
 		return res.status(500).json({
-			msg: 'Проблемы на стороне сервера. Попробуйте позже',
+			msg: 'Проблемы на стороне сервера. Попробуйте позже.',
 		});
 	}
 };
@@ -56,34 +56,52 @@ export const login = async (req, res) => {
 		const user = await UserModel.findOne({ email: req.body.email });
 
 		if (!user) {
-			return res.status(400).json({
-				msg: 'Неверный e-mail или пароль',
-			});
+			return res.status(400).json(
+				[
+					{
+						msg: 'Неверный e-mail или пароль.',
+						path: 'password',
+					},
+					{
+						msg: 'Неверный e-mail или пароль.',
+						path: 'email',
+					}
+				]
+			);
 		}
 
 		const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash);
 		if (!isValidPass) {
-			return res.status(400).json({
-				msg: 'Неверный e-mail или пароль',
-			});
+			return res.status(400).json(
+				[
+					{
+						msg: 'Неверный e-mail или пароль.',
+						path: 'password',
+					},
+					{
+						msg: '',
+						path: 'email',
+					}
+				]
+			);
 		}
 
 		sendTokenAndUserDataResponse(user, res);
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({
-			msg: 'Проблемы на стороне сервера. Попробуйте позже',
+			msg: 'Проблемы на стороне сервера. Попробуйте позже.',
 		});
 	}
 };
 
-export const getMe = async (req, res) => {
+export const getCheckAuth = async (req, res) => {
 	try {
 		const user = await UserModel.findById(req.userId);
 
 		if (!user) {
 			return res.status(404).json({
-				msg: 'Пользователь не найден',
+				msg: 'Пользователь не найден.',
 			});
 		}
 
@@ -93,7 +111,7 @@ export const getMe = async (req, res) => {
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({
-			msg: 'Нет доступа',
+			msg: 'Нет доступа.',
 		});
 	}
 };

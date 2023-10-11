@@ -11,12 +11,12 @@ export const checkAuth = (req, res, next) => {
 			next();
 		} catch (err) {
 			return res.status(403).json({
-				message: 'Нет доступа',
+				msg: 'Нет доступа.',
 			});
 		}
 	} else {
 		return res.status(403).json({
-			message: 'Нет доступа',
+			msg: 'Нет доступа.',
 		});
 	}
 };

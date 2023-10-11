@@ -3,9 +3,9 @@ import { body } from 'express-validator';
 // TODO - check for password fields equality
 
 export const registerValidation = [
-	body('email', 'Неверный формат почты').isEmail().isLength({ min: 5, max: 40 }).withMessage('Неверный формат почты'),
+	body('email', 'Неверный формат почты.').isEmail().isLength({ min: 5, max: 40 }).withMessage('Неверный формат почты'),
 	body('password',
-		'Пароль должен содержать 8 и более символов, строчные(-ую) и заглавные(-ую) буквы/букву, цифры(-у) и специальный(-е) символ(-ы) (-#!$@%^&*()_+ и др.)')
+		'Пароль должен содержать 8 и более символов, строчные(-ую) и заглавные(-ую) буквы(-у), цифры(-у) и специальный(-е) символ(-ы) (-#!$@%^&*()_+ и др.)')
 		.isStrongPassword({
 			minLength: 8,
 			minLowercase: 1,
